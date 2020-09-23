@@ -9,7 +9,11 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
 const transfersRouter = require("./routes/transfers");
+const blogsRouter = require("./routes/blogs");
+const likesRouter = require("./routes/likes");
 
 app.use("/api/transfers", transfersRouter);
+app.use("/api/blogs", blogsRouter);
+app.use("/api/likes", likesRouter);
 
 app.listen(port, () => console.log(`서버 연결 ${port}`));
