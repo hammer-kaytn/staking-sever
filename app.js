@@ -10,10 +10,10 @@ app.use(express.urlencoded({ extended: false }));
 
 const transfersRouter = require("./routes/transfers");
 const blogsRouter = require("./routes/blogs");
-const likesRouter = require("./routes/likes");
+const testRouter = require("./routes/test");
 
 app.use("/api/transfers", transfersRouter);
 app.use("/api/blogs", blogsRouter);
-app.use("/api/likes", likesRouter);
+app.use("/api/test", testRouter);
 
 app.listen(port, () => console.log(`서버 연결 ${port}`));
