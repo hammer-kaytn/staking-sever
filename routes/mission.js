@@ -26,4 +26,13 @@ app.post('/', function (req, res) {
   });
 });
 
+//모든 미션 조회
+app.get('/list', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
+  Mission.find(function (err, missions) {
+    if (err) return res.status(500).send({ error: '데이터 없음' });
+    res.json(missions);
+  });
+});
+
 module.exports = app;
