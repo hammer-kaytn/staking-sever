@@ -25,6 +25,14 @@ const missionSchema = mongoose.Schema({
     type: Number,
     require: true,
   },
+  missionId: {
+    type: Number,
+    require: true,
+  },
+  deadline: {
+    type: Date,
+    require: true,
+  },
   create_date: {
     type: Date,
     default: Date.now,

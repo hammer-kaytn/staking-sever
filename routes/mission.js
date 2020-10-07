@@ -12,6 +12,8 @@ app.post('/', function (req, res) {
   mission.tag = req.body.tag;
   mission.goal = req.body.goal;
   mission.reward = req.body.reward;
+  mission.missionId = req.body.missionId;
+  mission.deadline = req.body.deadline;
 
   mission.save(function (err) {
     if (err) {
