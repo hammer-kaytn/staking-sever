@@ -35,4 +35,29 @@ app.get('/list', function (req, res) {
   });
 });
 
+//특정 미션 조회
+app.get('/:id', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
+  let id = req.params.id;
+  console.log(req.params);
+  Mission.findById(id, function(err, mission) {
+    // if(err) return res.status(500).json({error: err});
+    // if(!mission) return res.status(404).json({error: 'mission not found'});
+    res.json(mission);
+  })
+  
+});
+
+
+//카테고리 매칭
+// app.get('/:category', function(req, res){
+//   Mission.find( req.params.category, function (err, missions) {
+//     if(err) throw err;
+//     res.json(missions);
+//     console.log(missions);
+//   }) 
+
+  
+// });
+
 module.exports = app;

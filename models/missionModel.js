@@ -37,6 +37,14 @@ const missionSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  title: {
+    type: String,
+    require: true,
+  },
+  image: {
+    type: String,
+    require: true,
+  },
 });
 
 const Mission = mongoose.model('missions', missionSchema);
