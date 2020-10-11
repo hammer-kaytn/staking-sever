@@ -14,6 +14,8 @@ app.post('/', function (req, res) {
   mission.reward = req.body.reward;
   mission.missionId = req.body.missionId;
   mission.deadline = req.body.deadline;
+  mission.title = req.body.title;
+  mission.image = req.body.image;
 
   mission.save(function (err) {
     if (err) {
@@ -35,19 +37,25 @@ app.get('/list', function (req, res) {
   });
 });
 
-//특정 미션 조회
-app.get('/:id', function (req, res) {
+// missionId 값으로 조회
+app.get('/:missionId', function (req, res) {
   res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
-  let id = req.params.id;
-  console.log(req.params);
-  Mission.findById(id, function(err, mission) {
-    // if(err) return res.status(500).json({error: err});
-    // if(!mission) return res.status(404).json({error: 'mission not found'});
+  Mission.findOne({ missionId: req.params.missionId }, function (err, mission) {
+    if (err) return res.status(500).json({ error: err });
+    if (!mission) return res.status(404).json({ error: '데이터가 없습니다.' });
     res.json(mission);
-  })
-  
+  });
 });
 
+// category 값으로 조회
+app.get('/list/:category', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
+  Mission.find({ category: req.params.category }, function (err, category) {
+    if (err) return res.status(500).json({ error: err });
+    if (!category) return res.status(404).json({ error: '데이터가 없습니다.' });
+    res.json(category);
+  });
+});
 
 //카테고리 매칭
 // app.get('/:category', function(req, res){
@@ -55,9 +63,8 @@ app.get('/:id', function (req, res) {
 //     if(err) throw err;
 //     res.json(missions);
 //     console.log(missions);
-//   }) 
+//   })
 
-  
 // });
 
 module.exports = app;
