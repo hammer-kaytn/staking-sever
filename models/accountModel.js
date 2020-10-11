@@ -9,6 +9,7 @@ const accountSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  participateList: [{ missionId: String }],
   create_date: {
     type: Date,
     default: Date.now,

@@ -47,6 +47,16 @@ app.get('/:missionId', function (req, res) {
   });
 });
 
+// account 값으로 조회
+app.get('/account/:address', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
+  Mission.find({ account: req.params.address }, function (err, mission) {
+    if (err) return res.status(500).json({ error: err });
+    if (!mission) return res.status(404).json({ error: '데이터가 없습니다.' });
+    res.json(mission);
+  });
+});
+
 // category 값으로 조회
 app.get('/list/:category', function (req, res) {
   res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
@@ -57,14 +67,30 @@ app.get('/list/:category', function (req, res) {
   });
 });
 
-//카테고리 매칭
-// app.get('/:category', function(req, res){
-//   Mission.find( req.params.category, function (err, missions) {
-//     if(err) throw err;
-//     res.json(missions);
-//     console.log(missions);
-//   })
+// 미션 참여기록 추가
+app.post('/updateMission', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
 
-// });
+  Mission.findOneAndUpdate(
+    { missionId: req.body.missionId },
+    {
+      $push: {
+        participateList: {
+          account: req.body.account,
+        },
+      },
+      $inc: { likes: 1 },
+    },
+    function (err) {
+      if (err) {
+        console.error(err);
+        res.json({ result: '미션 업데이트 실패' });
+        return;
+      }
+
+      res.json({ result: '미션 업데이트 성공' });
+    },
+  );
+});
 
 module.exports = app;

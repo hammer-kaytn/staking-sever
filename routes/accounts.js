@@ -58,4 +58,29 @@ app.post('/update', function (req, res) {
   );
 });
 
+// 미션 참여기록 추가
+app.post('/addMission', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
+
+  Account.findOneAndUpdate(
+    { address: req.body.account },
+    {
+      $push: {
+        participateList: {
+          missionId: req.body.missionId,
+        },
+      },
+    },
+    function (err) {
+      if (err) {
+        console.error(err);
+        res.json({ result: '미션 추가 실패' });
+        return;
+      }
+
+      res.json({ result: '미션 추가 성공' });
+    },
+  );
+});
+
 module.exports = app;

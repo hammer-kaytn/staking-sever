@@ -45,6 +45,11 @@ const missionSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  participateList: [{ account: String }],
 });
 
 const Mission = mongoose.model('missions', missionSchema);
