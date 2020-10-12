@@ -17,18 +17,18 @@ app.post('/', (req, res) => {
 
   Cache.put(phoneNumber, verifyCode.toString());
 
-  //   try {
-  //     client.messages
-  //       .create({
-  //         body: `[하트링크] 인증번호는 ${verifyCode} 입니다.`,
-  //         from: '+12246430642',
-  //         to: `+82${phoneNumber}`,
-  //       })
-  //       .then((message) => console.log(message.sid));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  return res.send(`인증번호가 발송되었습니다. ${verifyCode}`);
+  try {
+    client.messages
+      .create({
+        body: `[하트링크] 인증번호는 ${verifyCode} 입니다.`,
+        from: '+12246430642',
+        to: `+82${phoneNumber}`,
+      })
+      .then((message) => console.log(message.sid));
+  } catch (error) {
+    console.log(error);
+  }
+  return res.send('인증번호가 발송되었습니다.');
 });
 
 app.post('/verify', (req, res) => {
