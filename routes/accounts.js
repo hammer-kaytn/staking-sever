@@ -20,13 +20,26 @@ app.get('/:address', function (req, res) {
   });
 });
 
+// phoneNumber 값으로 조회
+app.get('/phone/:phoneNumber', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
+  Account.findOne({ phoneNumber: req.params.phoneNumber }, function (
+    err,
+    book,
+  ) {
+    if (err) return res.status(500).json({ error: err });
+    if (!book) return res.status(404).json({ error: '데이터가 없습니다.' });
+    res.json(book);
+  });
+});
+
 // 계정 데이터 생성
 app.post('/', function (req, res) {
   res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
   const account = new Account();
 
   account.address = req.body.account;
-  account.snsAccount = req.body.snsAccount;
+  account.phoneNumber = req.body.phoneNumber;
 
   account.save(function (err) {
     if (err) {

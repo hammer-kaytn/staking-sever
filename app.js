@@ -28,11 +28,11 @@ app.use(cors());
 const transfersRouter = require('./routes/transfers'); // txList 라우터
 const accountRouter = require('./routes/accounts'); // SNS계정 연동 라우터
 const missionRouter = require('./routes/mission'); // 미션 관련 라우터
-const testRouter = require('./routes/test');
+const authRouter = require('./routes/auth'); // 계정 인증 관련 라우터
 
 app.use('/api/transfers', transfersRouter); //txList 라우터
 app.use('/api/accounts', accountRouter); // SNS계정 연동 라우터
 app.use('/api/mission', missionRouter); // 미션 관련 라우터
-app.use('/api/test', testRouter);
+app.use('/api/auth', authRouter); // 계정 인증 관련 라우터
 
 app.listen(PORT, () => console.log(`서버 연결 ${PORT}`));

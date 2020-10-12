@@ -5,7 +5,7 @@ const accountSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  snsAccount: {
+  phoneNumber: {
     type: String,
     require: true,
   },
