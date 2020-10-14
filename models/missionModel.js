@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { TrunkContext } = require('twilio/lib/rest/trunking/v1/trunk');
 
 const missionSchema = mongoose.Schema({
   category: {
@@ -29,10 +30,10 @@ const missionSchema = mongoose.Schema({
     type: Number,
     require: true,
   },
-  deadline: {
-    type: Date,
-    require: true,
-  },
+  // deadline: {
+  //   type: Date,
+  //   defalut: Date.now + 30,
+  // },
   create_date: {
     type: Date,
     default: Date.now,
@@ -50,6 +51,14 @@ const missionSchema = mongoose.Schema({
     default: 0,
   },
   participateList: [{ account: String }],
+  content: {
+    type: String,
+    require: true,
+  },
+  status: {
+    type: String,
+    defalut: '진행중',
+  },
 });
 
 const Mission = mongoose.model('missions', missionSchema);

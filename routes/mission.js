@@ -13,9 +13,11 @@ app.post('/', function (req, res) {
   mission.goal = req.body.goal;
   mission.reward = req.body.reward;
   mission.missionId = req.body.missionId;
-  mission.deadline = req.body.deadline;
+  // mission.deadline = Date.now + 30;
   mission.title = req.body.title;
   mission.image = req.body.image;
+  mission.content = req.body.content;
+  mission.status = '진행중';
 
   mission.save(function (err) {
     if (err) {
