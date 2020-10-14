@@ -59,6 +59,24 @@ app.get('/account/:address', function (req, res) {
   });
 });
 
+// 내가 참여한 미션인지 확인
+app.get('/participateList/:address', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
+  Mission.find(
+    {
+      participateList: {
+        $elemMatch: { account: req.params.address },
+      },
+    },
+    function (err, mission) {
+      if (err) return res.status(500).json({ error: err });
+      if (!mission)
+        return res.status(404).json({ error: '데이터가 없습니다.' });
+      res.json(mission);
+    },
+  );
+});
+
 // category 값으로 조회
 app.get('/list/:category', function (req, res) {
   res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
