@@ -85,7 +85,7 @@ app.get('/list/:category', function (req, res) {
     if (err) return res.status(500).json({ error: err });
     if (!category) return res.status(404).json({ error: '데이터가 없습니다.' });
     res.json(category);
-  });
+  }).sort({ _id: -1 });
 });
 
 // 미션 참여기록 추가

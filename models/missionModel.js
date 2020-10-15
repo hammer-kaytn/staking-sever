@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { TrunkContext } = require('twilio/lib/rest/trunking/v1/trunk');
 
 const missionSchema = mongoose.Schema({
   category: {

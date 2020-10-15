@@ -1,5 +1,6 @@
 require('dotenv').config();
 const app = require('express').Router();
+const axios = require('axios');
 const Cache = require('memory-cache');
 const request = require('request');
 const CryptoJS = require('crypto-js');
@@ -33,7 +34,7 @@ hmac.update(accessKey);
 const hash = hmac.finalize();
 const signature = hash.toString(CryptoJS.enc.Base64);
 
-app.post('/', function (req, res) {
+app.post('/', function async(req, res) {
   const phoneNumber = req.body.phoneNumber;
 
   Cache.del(phoneNumber);
@@ -43,39 +44,35 @@ app.post('/', function (req, res) {
 
   Cache.put(phoneNumber, verifyCode.toString());
 
-  request(
-    {
-      method: method,
-      json: true,
-      uri: url,
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'x-ncp-iam-access-key': NCP_accessKey,
-        'x-ncp-apigw-timestamp': date,
-        'x-ncp-apigw-signature-v2': signature,
-      },
-      body: {
-        type: 'SMS',
-        contentType: 'COMM',
-        countryCode: '82',
-        from: '01032587579',
-        content: `[하트링크] 인증번호는 ${verifyCode} 입니다.`,
-        messages: [
-          {
-            to: `${phoneNumber}`,
-          },
-        ],
-      },
+  axios({
+    method: method,
+    json: true,
+    url,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'x-ncp-iam-access-key': NCP_accessKey,
+      'x-ncp-apigw-timestamp': date,
+      'x-ncp-apigw-signature-v2': signature,
     },
-    function (err, res, html) {
-      if (err) console.log(err);
-      else {
-        console.log(html);
-      }
+    data: {
+      type: 'SMS',
+      contentType: 'COMM',
+      countryCode: '82',
+      from: '01032587579',
+      content: `[하트링크] 인증번호는 ${verifyCode} 입니다.`,
+      messages: [
+        {
+          to: `${phoneNumber}`,
+        },
+      ],
     },
-  );
-
-  res.json('인증번호가 발송되었습니다.');
+  })
+    .then(function (response) {
+      res.json(response['data']);
+    })
+    .catch((err) => {
+      res.json('err');
+    });
 });
 
 app.post('/verify', (req, res) => {
