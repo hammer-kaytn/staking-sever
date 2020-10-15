@@ -5,15 +5,15 @@ const Mission = require('../models/missionModel');
 app.post('/', function (req, res) {
   res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
   const mission = new Mission();
+  const tDate = new Date();
 
-  mission.category = req.body.category;
   mission.account = req.body.account;
   mission.page = req.body.page;
   mission.tag = req.body.tag;
   mission.goal = req.body.goal;
   mission.reward = req.body.reward;
   mission.missionId = req.body.missionId;
-  // mission.deadline = Date.now + 30;
+  mission.deadline = tDate.setDate(tDate.getDate() + 30);
   mission.title = req.body.title;
   mission.image = req.body.image;
   mission.content = req.body.content;
@@ -109,6 +109,25 @@ app.post('/updateMission', function (req, res) {
       }
 
       res.json({ result: '미션 업데이트 성공' });
+    },
+  );
+});
+
+// 미션 상태 수정
+app.post('/updateStatus', function (req, res) {
+  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
+
+  Mission.findOneAndUpdate(
+    { missionId: req.body.missionId },
+    { $set: { status: req.body.status } },
+    function (err) {
+      if (err) {
+        console.error(err);
+        res.json({ result: '미션 상태 수정 실패' });
+        return;
+      }
+
+      res.json({ result: '미션 상태 수정 성공' });
     },
   );
 });

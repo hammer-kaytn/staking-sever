@@ -3,6 +3,7 @@
 1. mission 스키마에 content, status 추가
 2. mission api에서 내 참여 미션 확인하는 api 수정
 3. account 스키마에서 participateList 삭제(mission 스키마에서 활용)
+4. mission status 변경하는 작업 추가
 
 ## 2020-10-13(화)
 
