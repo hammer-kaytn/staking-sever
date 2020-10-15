@@ -7,6 +7,7 @@ app.post('/', function (req, res) {
   const mission = new Mission();
   const tDate = new Date();
 
+  mission.category = req.body.category;
   mission.account = req.body.account;
   mission.page = req.body.page;
   mission.tag = req.body.tag;
