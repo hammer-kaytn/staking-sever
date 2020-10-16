@@ -11,40 +11,47 @@ const chainId = 1001; // Baobab; for Cypress, use 8217
 const credential = Buffer.from(`${accessKey}:${secret}`).toString('base64');
 
 // Make sure your are using TLS
-const url = `https://th-api.beta.klaytn.io/v1/kct/ft/${ftAddr}/transfer`;
+const url = `https://th-api.klaytnapi.com/v2/transfer`;
+const url2 = `https://th-api.klaytnapi.com/v2/transfer/account/`;
 
 const headers = {
   Authorization: `Basic ${credential}`,
   'Content-Type': 'application/json',
-  'x-krn': `krn:${chainId}:th`,
+  'x-chain-id': `${chainId}`,
 };
 
-app.get('/', function (req, res) {
-  res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
-  axios
-    .get(url, {
-      headers: headers,
-    })
-    .then(function (response) {
-      res.json(response['data']);
-    })
-    .then(function (err) {
-      if (err) {
-        console.error('error: ' + err);
-      }
-    })
-    .then(function () {
-      // finally
-    });
-});
+// app.get('/', function (req, res) {
+//   res.set({ 'access-control-allow-origin': '*' });
+//   axios
+//     .get(url, {
+//       headers: headers,
+//       params: {
+//         kind: 'ft',
+//         presets: '147',
+//       },
+//     })
+//     .then(function (response) {
+//       res.json(response['data']);
+//     })
+//     .then(function (err) {
+//       if (err) {
+//         console.error('error: ' + err);
+//       }
+//     })
+//     .then(function () {
+//       // finally
+//     });
+// });
 
 app.get('/:address', function (req, res) {
   res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
   axios
-    .get(url, {
+    .get(url2 + req.params.address, {
       headers: headers,
       params: {
-        eoaAddress: req.params.address,
+        kind: 'ft',
+        presets: '147',
+        'ca-filter': ftAddr,
       },
     })
     .then(function (response) {

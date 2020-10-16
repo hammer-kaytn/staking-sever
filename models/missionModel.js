@@ -58,6 +58,10 @@ const missionSchema = mongoose.Schema({
     type: String,
     defalut: '진행중',
   },
+  percent: {
+    type: Number,
+    defalut: 0,
+  },
 });
 
 const Mission = mongoose.model('missions', missionSchema);
