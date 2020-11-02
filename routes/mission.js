@@ -19,6 +19,8 @@ app.post('/', function (req, res) {
   mission.image = req.body.image;
   mission.content = req.body.content;
   mission.status = '진행중';
+  mission.presentLikes = req.body.presentLikes;
+  mission.code = req.body.code;
 
   mission.save(function (err) {
     if (err) {

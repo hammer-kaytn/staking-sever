@@ -62,6 +62,14 @@ const missionSchema = mongoose.Schema({
     type: Number,
     defalut: 0,
   },
+  presentLikes: {
+    type: Number,
+    defalut: 0,
+  },
+  code: {
+    type: String,
+    require: true,
+  },
 });
 
 const Mission = mongoose.model('missions', missionSchema);
