@@ -16,10 +16,12 @@
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "googleapis": "^62.0.0",
     "memory-cache": "^0.2.0",
     "mongoose": "^5.10.7",
     "nodemon": "^2.0.5",
     "puppeteer": "^5.3.1",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "updated-youtube-info": "^1.4.7"
   }
 }

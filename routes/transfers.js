@@ -20,29 +20,6 @@ const headers = {
   'x-chain-id': `${chainId}`,
 };
 
-// app.get('/', function (req, res) {
-//   res.set({ 'access-control-allow-origin': '*' });
-//   axios
-//     .get(url, {
-//       headers: headers,
-//       params: {
-//         kind: 'ft',
-//         presets: '147',
-//       },
-//     })
-//     .then(function (response) {
-//       res.json(response['data']);
-//     })
-//     .then(function (err) {
-//       if (err) {
-//         console.error('error: ' + err);
-//       }
-//     })
-//     .then(function () {
-//       // finally
-//     });
-// });
-
 app.get('/:address', function (req, res) {
   res.set({ 'access-control-allow-origin': '*' }); //api 서버랑 다를때 해결
   axios
